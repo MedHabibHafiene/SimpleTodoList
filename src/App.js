@@ -7,18 +7,18 @@ function App() {
   function addItem() {
     if (!newItem) {
       alert("Please enter an item");
+    } else {
+      const item = {
+        id: Math.floor(Math.random() * 1000),
+        value: newItem,
+      };
+      setItems((oldList) => [...oldList, item]);
+      setNewItem("");
     }
-    const item = {
-      id: Math.floor(Math.random() * 1000),
-      value: newItem,
-    };
-    setItems((oldList) => [...oldList, item]);     
-    setNewItem("");
-    console.log(items);
   }
-  function deleteItem(id) { 
+  function deleteItem(id) {
     // console.log(id)
-    const newArray = items.filter(item => item.id !== id)
+    const newArray = items.filter((item) => item.id !== id);
     setItems(newArray);
   }
   return (
@@ -30,10 +30,22 @@ function App() {
         value={newItem}
         onChange={(e) => setNewItem(e.target.value)}
       />
-      <button onClick={() => addItem()}>ADD</button>
+      <button className="addButton" onClick={() => addItem()}>
+        Add
+      </button>
       <ul>
         {items.map((item) => {
-          return <li key={item.key}>{item.value} <button onClick={() => deleteItem(item.id)}>❌</button></li>;
+          return (
+            <li key={item.key}>
+              {item.value}{" "}
+              <button
+                className="deleteButton"
+                onClick={() => deleteItem(item.id)}
+              >
+                ❌
+              </button>
+            </li>
+          );
         })}
       </ul>
     </div>
